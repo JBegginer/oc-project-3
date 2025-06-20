@@ -9,11 +9,13 @@ After retrieving the REPO run the `npm install` command to install the project d
 Once the dependencies are installed, launch the project with the `npm start` command
 
 Test account for Sophie Bluel
+
 ```
 email: sophie.bluel@test.tld
 
-password: S0phie 
+password: S0phie
 ```
+
 Link to see the
 [Swagger documentation ](http://localhost:5678/api-docs/)
 

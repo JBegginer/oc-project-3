@@ -9,6 +9,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script defer src="assets/script.js"></script>
 </head>
 <body>
 <header>
@@ -17,7 +18,7 @@
 		<ul>
 			<li>projects</li>
 			<li>contact</li>
-			<li>login</li>
+			<li id="loginLink"> <a href="login/login.html">Login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -35,53 +36,8 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>My Projects</h2>
-		<div class="gallery">
-			<figure>
-				<img src="assets/images/abajour-tahina.png" alt="Tahina Lampshade">
-				<figcaption>Tahina Lampshade</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-v.png" alt="Paris V Appartment">
-				<figcaption>Paris V Appartment</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/restaurant-sushisen-londres.png" alt="Sushisen Restaurant - London">
-				<figcaption>Sushisen Restaurant - London</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/la-balisiere.png" alt="La Balisière” Villa – Port-Louis">
-				<figcaption>“La Balisière” Villa – Port-Louis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/structures-thermopolis.png" alt="Thermopolis Structures">
-				<figcaption>Thermopolis Structures</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-x.png" alt="Paris X Appartment">
-				<figcaption>Paris X Appartment</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/le-coteau-cassis.png" alt="Le Coteau” Pavillon - Cassis">
-				<figcaption>“Le Coteau” Pavillon - Cassis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/villa-ferneze.png" alt="Ferneze Villa - Elba">
-				<figcaption>Ferneze Villa - Elba</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-xviii.png" alt="Paris XVIII Appartment">
-				<figcaption>Paris XVIII Appartment</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/bar-lullaby-paris.png" alt="Lullaby” Bar - Paris">
-				<figcaption>“Lullaby” Bar - Paris</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
-				<figcaption>First Arte Hotel - New Delhi</figcaption>
-			</figure>
-		</div>
+		<h2 id="myProject">My Projects</h2>
+		<div class="gallery"></div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
@@ -105,5 +61,59 @@
 		</ul>
 	</nav>
 </footer>
+<div id="editingModal" class="modal">
+		<div id="modalContent">
+			<div id ='modal1' class="modal1">
+				<div id="topModal1" class="topModal">
+					<h2 class="topModalH2">Photo Gallery</h2>
+					<button id="closeModal" class="closeModal">X</button>
+				</div>
+				<div id = "modalPictures">
+					<p>gg</p>
+				</div>
+				<button id="addPhoto">Add Photo</button>
+			</div>
+			<div id="addPicForm">
+				<Div id = "topModal2" class="topModal">
+					<button id="backBut">back</button>
+					<h2 class="topModalH2">Add Photo</h2>
+					<button id="closeModal2" class="closeModal">X</button>
+				</Div>
+
+	<form id="uploadForm" action="/your-upload-endpoint" method="POST" enctype="multipart/form-data">
+  <div id="uploadBox" class="photo-upload-box" onclick="document.getElementById('image').click()">
+    <div class="upload-content" id="uploadContent">
+      <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" alt="placeholder" class="upload-icon">
+      <div class="upload-button">+ Add photo</div>
+      <p class="upload-note">jpg, png, max 4 MB</p>
+    </div>
+  </div>
+  <input type="file" id="image" name="image" accept="image/*" required hidden>
+</form>
+
+
+
+				<div class="inputModals">
+				  <label for="title">Title</label>
+				  <input type="text" id="title" name="title" class="inputModal" required>
+				</div>
+				<div class="inputModals">
+				  <label for="category">Category</label>
+				  <select id="category" name="category" class="inputModal" required>
+					<option value="">Select a category</option>
+					<option value="1">Objects</option>
+					<option value="2">Apartments</option>
+					<option value="3">Hotels & Restaurants</option>
+				  </select>
+				</div>
+			
+				  <button type="submit">Confirm</button>
+				</form>
+		
+		
+			</div>
+		</div>
+</div>
+	
 </body>
 </html>
