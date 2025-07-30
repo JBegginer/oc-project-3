@@ -6,30 +6,44 @@ async function fetchWorks() {
     return works;
 }
 
-function updateWorksOnPage(works, parentElem, showCaptions = true) {
-    parentElem.innerHTML = ""; 
+function updateWorksOnPage(works, parentElem, showCaptions = true, showDelete = false) {
+    parentElem.innerHTML = "";
 
     for (let i = 0; i < works.length; ++i) {
         const currentWork = works[i];
 
-        const figure = document.createElement('figure');
-        const img = document.createElement('img');
-        img.src = currentWork.imageUrl;
-        img.alt = currentWork.title;
 
-        
+        const figure = document.createElement('figure');
+        figure.classList.add('work-item');
+
+        const img = document.createElement('img');
+        img.src = currentWork.imageUrl; // Make sure this key exists
+        img.alt = currentWork.title || 'No title';
+
         figure.appendChild(img);
 
-        
-        if (showCaptions) {
+        if (showCaptions && currentWork.title) {
             const caption = document.createElement('figcaption');
             caption.innerText = currentWork.title;
             figure.appendChild(caption);
         }
 
+        if (showDelete) {
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('delete-pic');
+            deleteBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>';
+
+            deleteBtn.addEventListener('click', () => {
+                figure.remove();
+            });
+
+            figure.appendChild(deleteBtn);
+        }
+
         parentElem.appendChild(figure);
     }
 }
+
 
 
 async function main() {
@@ -38,12 +52,12 @@ async function main() {
 
     // update DOM with the works
     const galleryElem = document.querySelector('#portfolio .gallery');
-    updateWorksOnPage(works, galleryElem);
+    updateWorksOnPage(works, galleryElem, true, false);
 }
 
 
 main();
-
+// login func //
 function doLogin() {
     const token = localStorage.getItem("token")
     const userId = localStorage.getItem("userId")
@@ -71,7 +85,7 @@ doLogin();
 const loginLink = document.getElementById("loginLink")
 
 
-
+// opening modal for edit //
 async function openEditingModal() {
   const editingModal = document.getElementById("editingModal");
   editingModal.style.display = "flex";
@@ -79,9 +93,9 @@ async function openEditingModal() {
   const works = await fetchWorks();
 
   const modalPictures = document.getElementById("modalPictures");
-  modalPictures.innerHTML = ""; 
 
-  updateWorksOnPage(works, modalPictures, false); 
+
+  updateWorksOnPage(works, modalPictures, false, true); 
 
   // Wait for DOM to update
   setTimeout(() => {
@@ -119,6 +133,8 @@ imgPreview();
 
 
 
+
+// shows other modal window
 function addPictureModal() {
   const addPicForm = document.getElementById("addPicForm");
   const modal1 = document.getElementById("modal1");
@@ -133,7 +149,7 @@ function goBack(){
     modal1.style.display = "flex";}
 
 }
-
+// closes modal
 function closeModal() {
   const modal1 = document.getElementById("modal1");
   const addPicForm = document.getElementById("addPicForm");

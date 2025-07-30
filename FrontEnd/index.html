@@ -68,9 +68,7 @@
 					<h2 class="topModalH2">Photo Gallery</h2>
 					<button id="closeModal" class="closeModal">X</button>
 				</div>
-				<div id = "modalPictures">
-					<p>gg</p>
-				</div>
+				<div id = "modalPictures"></div>
 				<button id="addPhoto">Add Photo</button>
 			</div>
 			<div id="addPicForm">
@@ -80,7 +78,7 @@
 					<button id="closeModal2" class="closeModal">X</button>
 				</Div>
 
-	<form id="uploadForm" action="/your-upload-endpoint" method="POST" enctype="multipart/form-data">
+	<form id="uploadForm" action="http://localhost:5678/api/works" method="POST" enctype="multipart/form-data">
   <div id="uploadBox" class="photo-upload-box" onclick="document.getElementById('image').click()">
     <div class="upload-content" id="uploadContent">
       <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" alt="placeholder" class="upload-icon">

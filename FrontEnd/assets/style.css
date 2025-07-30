@@ -307,6 +307,7 @@ footer nav ul {
 	flex-wrap: wrap;
 	gap: 10px;
 	
+	
  }
 
  .logOut{
@@ -321,6 +322,7 @@ footer nav ul {
 	height: 102px;
 	flex: 0 0 20%;
 	box-sizing: border-box;
+	
 }
 
 
@@ -389,3 +391,8 @@ input[type="file"] {
 }
   
 
+.deletepic {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
