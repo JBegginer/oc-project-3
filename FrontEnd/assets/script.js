@@ -59,28 +59,56 @@ async function main() {
 main();
 // login func //
 function doLogin() {
-    const token = localStorage.getItem("token")
-    const userId = localStorage.getItem("userId")
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    const loginLink = document.getElementById('loginLink');
+    const myProject = document.getElementById('myProject');
+    //looking for token//
     if (token) {
-        const loginLink = document.getElementById('loginLink')
-        const elem = document.createElement('a')
-            elem.innerText = 'Logout'
-            elem.classList.add('logOut')
-            elem.href = 'login/login.html'
-            loginLink.replaceChildren(elem)
-        const myProject = document.getElementById('myProject')
-        const editBut = document.createElement('button')
-            editBut.innerText = 'Edit'
-            editBut.classList.add('editButton')
-            myProject.appendChild(editBut)
+        const logoutLink = document.createElement('a');
+        logoutLink.innerText = 'Logout';
+        logoutLink.classList.add('logOut');
+        logoutLink.href = '#';
 
-            editBut.addEventListener('click', () => {
-               openEditingModal()
-            })
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
 
+            
+            const editButton = document.querySelector('.editButton');
+            if (editButton) {
+                editButton.remove();
+            }
 
+            
+            const loginAgain = document.createElement('a');
+            loginAgain.innerText = 'Login';
+            loginAgain.href = 'login/login.html';
+            loginLink.replaceChildren(loginAgain);
+        });
+        // adds edit button//
+        loginLink.replaceChildren(logoutLink);
+
+        const editBut = document.createElement('button');
+        editBut.innerText = 'Edit';
+        editBut.classList.add('editButton');
+        myProject.appendChild(editBut);
+
+        editBut.addEventListener('click', () => {
+            openEditingModal();
+        });
+
+    } else {
+        const loginAgain = document.createElement('a');
+        loginAgain.innerText = 'Login';
+        loginAgain.href = 'login/login.html';
+        loginLink.replaceChildren(loginAgain);
     }
 }
+
+
 doLogin();
 const loginLink = document.getElementById("loginLink")
 
