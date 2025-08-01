@@ -185,6 +185,29 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+.pjButtons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 20px;
+	width: 100%;
+}
+.pjButton {
+	padding: 10px 20px;
+	background-color: white;
+	color: #1D6154;
+	border-color: #1D6154;
+	cursor: pointer;
+	border-radius: 15px;
+	font-size: 1em;
+
+}
+
+.pjButton.clicked {
+	background-color: #1D6154;
+	color: white;
+}
 
 .editButton {
     padding: 10px 20px;

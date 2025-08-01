@@ -63,12 +63,15 @@ function doLogin() {
     const userId = localStorage.getItem("userId");
     const loginLink = document.getElementById('loginLink');
     const myProject = document.getElementById('myProject');
+    const pjButtons = document.querySelector('.pjButtons');
+
     //looking for token//
     if (token) {
         const logoutLink = document.createElement('a');
         logoutLink.innerText = 'Logout';
         logoutLink.classList.add('logOut');
         logoutLink.href = '#';
+        pjButtons.style.display = 'none'; 
 
         logoutLink.addEventListener('click', (e) => {
             e.preventDefault();
@@ -76,18 +79,23 @@ function doLogin() {
             localStorage.removeItem('token');
             localStorage.removeItem('userId');
 
-            
-            const editButton = document.querySelector('.editButton');
-            if (editButton) {
-                editButton.remove();
+        
+        const editButton = document.querySelector('.editButton');
+        if (editButton) {
+            editButton.remove();
             }
+                const pjButtons = document.querySelector('.pjButtons');
+        if (pjButtons) {
+            pjButtons.style.display = 'block';
+        }
 
-            
-            const loginAgain = document.createElement('a');
-            loginAgain.innerText = 'Login';
+
+        const loginAgain = document.createElement('a');
+        loginAgain.innerText = 'Login';
             loginAgain.href = 'login/login.html';
             loginLink.replaceChildren(loginAgain);
         });
+        
         // adds edit button//
         loginLink.replaceChildren(logoutLink);
 
@@ -111,6 +119,19 @@ function doLogin() {
 
 doLogin();
 const loginLink = document.getElementById("loginLink")
+
+//reversed buttons colors//
+const pjButtons = document.querySelectorAll(".pjButton");
+
+pjButtons.forEach(function(button) {
+  button.addEventListener("click", function () {
+
+    pjButtons.forEach(b => b.classList.remove("clicked"));
+
+    button.classList.add("clicked");
+  });
+});
+
 
 
 // opening modal for edit //
