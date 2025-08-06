@@ -27,15 +27,38 @@ function updateWorksOnPage(works, parentElem, showCaptions = true, showDelete = 
             caption.innerText = currentWork.title;
             figure.appendChild(caption);
         }
+        // Add data-id attribute to figure for later use
+        figure.dataset.id = currentWork.id;
+
 
         if (showDelete) {
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('delete-pic');
             deleteBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>';
 
-            deleteBtn.addEventListener('click', () => {
-                figure.remove();
-            });
+           deleteBtn.addEventListener('click', () => {
+  const id = figure.dataset.id; // get the id from the dataset
+  const token = localStorage.getItem('token'); // token for authorization
+
+  fetch(`http://localhost:5678/api/works/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+    .then(res => {
+      if (!res.ok) throw new Error('Failed to delete from API');
+      return res.text(); // or res.json(), depending on your API
+    })
+    .then(() => {
+      figure.remove(); // ✅ Only remove from DOM if API call was successful
+    })
+    .catch(err => {
+      console.error('Error deleting:', err);
+      alert('Failed to delete image. Are you logged in or authorized?');
+    });
+});
+
 
             figure.appendChild(deleteBtn);
         }
@@ -190,6 +213,12 @@ function addPictureModal() {
   modal1.style.display = "none";
   addPicForm.style.display = "block";
 }
+
+
+
+
+
+
   
 function goBack(){
     const addPicForm = document.getElementById("addPicForm");
@@ -219,6 +248,8 @@ function closeModal() {
   
   resetImgPreview();
 }
+
+
 
 
 
