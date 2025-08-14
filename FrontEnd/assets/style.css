@@ -351,6 +351,7 @@ footer nav ul {
 
 #uploadForm{
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 420px;
