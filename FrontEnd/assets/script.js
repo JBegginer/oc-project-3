@@ -15,15 +15,32 @@ function updateWorksOnPage(
   parentElem.innerHTML = "";
 
   for (let i = 0; i < works.length; ++i) {
-    const currentWork = works[i];
+  const currentWork = works[i];
 
-    const figure = document.createElement("figure");
-    figure.classList.add("work-item");
+  const figure = document.createElement("figure");
+  figure.classList.add("work-item");
 
-    const img = document.createElement("img");
-    img.src = currentWork.imageUrl;
-    img.alt = currentWork.title || "No title";
-    figure.appendChild(img);
+  const img = document.createElement("img");
+  img.src = currentWork.imageUrl;
+  img.alt = currentWork.title || "No title";
+
+  // Use categoryId as dataset
+  img.dataset.category = currentWork.categoryId;  
+
+  figure.appendChild(img);
+
+  // Optional caption
+  if (currentWork.title) {
+    const caption = document.createElement("figcaption");
+    caption.innerText = currentWork.title;
+    figure.appendChild(caption);
+  }
+
+  figure.dataset.id = currentWork.id;
+
+  document.querySelector(".gallery").appendChild(figure);
+}
+
 
     if (showCaptions && currentWork.title) {
       const caption = document.createElement("figcaption");
@@ -49,8 +66,7 @@ function updateWorksOnPage(
 
       //dletebtn does this
       deleteBtn.addEventListener("click", (e) => {
-        e.preventDefault(); // stop form submit behavior
-        e.stopPropagation(); // stop click from bubbling to modal
+        e.stopImmediatePropagation();
         deleteWork(figure); // still delete the work
       });
 
@@ -58,7 +74,7 @@ function updateWorksOnPage(
     }
     parentElem.appendChild(figure);
   }
-}
+
 
 function deleteWork(figure) {
   const id = figure.dataset.id;
@@ -157,13 +173,32 @@ const loginLink = document.getElementById("loginLink");
 //reversed buttons colors//
 const pjButtons = document.querySelectorAll(".pjButton");
 
+
 pjButtons.forEach(function (button) {
   button.addEventListener("click", function () {
+    // Remove "clicked" class from all buttons
     pjButtons.forEach((b) => b.classList.remove("clicked"));
 
+    const category = button.dataset.filter; // <-- use button's filter
+
+    // Select all images
+    const images = document.querySelectorAll(".gallery img");
+
+    // Filter images
+    images.forEach(img => {
+      const figure = img.parentElement; // Get the parent figure element
+      if (category === 'all' || img.dataset.category === category) {
+        figure.style.display = 'block';  // show matching
+      } else {
+        figure.style.display = 'none';   // hide others
+      }
+    });
+
+    // Add "clicked" class to the current button
     button.classList.add("clicked");
   });
 });
+
 
 // opening modal for edit //
 async function openEditingModal() {

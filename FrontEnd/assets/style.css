@@ -132,11 +132,18 @@ li:hover {
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
+.gallery figure {
+  margin: 0;             /* remove default figure margin */
+  width: 100%;           /* fill the grid cell */
+}
 
 .gallery img {
-	width: 100%;
-
+  width: 100%;           /* make image fill figure */
+  height: auto;
+  object-fit: cover;
+  display: block;        /* remove inline spacing under image */
 }
+
 #contact {
 	width: 50%;
 margin: auto;
