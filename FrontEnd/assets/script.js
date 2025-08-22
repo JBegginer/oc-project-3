@@ -15,32 +15,30 @@ function updateWorksOnPage(
   parentElem.innerHTML = "";
 
   for (let i = 0; i < works.length; ++i) {
-  const currentWork = works[i];
+    const currentWork = works[i];
 
-  const figure = document.createElement("figure");
-  figure.classList.add("work-item");
+    const figure = document.createElement("figure");
+    figure.classList.add("work-item");
 
-  const img = document.createElement("img");
-  img.src = currentWork.imageUrl;
-  img.alt = currentWork.title || "No title";
+    const img = document.createElement("img");
+    img.src = currentWork.imageUrl;
+    img.alt = currentWork.title || "No title";
 
-  // Use categoryId as dataset
-  img.dataset.category = currentWork.categoryId;  
+    // Use categoryId as dataset
+    img.dataset.category = currentWork.categoryId;
 
-  figure.appendChild(img);
+    figure.appendChild(img);
 
-  // Optional caption
-  if (currentWork.title) {
-    const caption = document.createElement("figcaption");
-    caption.innerText = currentWork.title;
-    figure.appendChild(caption);
-  }
+    // Optional caption
+    if (currentWork.title) {
+      const caption = document.createElement("figcaption");
+      caption.innerText = currentWork.title;
+      figure.appendChild(caption);
+    }
 
-  figure.dataset.id = currentWork.id;
+    figure.dataset.id = currentWork.id;
 
-  document.querySelector(".gallery").appendChild(figure);
-}
-
+    document.querySelector(".gallery").appendChild(figure);
 
     if (showCaptions && currentWork.title) {
       const caption = document.createElement("figcaption");
@@ -54,6 +52,7 @@ function updateWorksOnPage(
     if (showDelete) {
       const deleteBtn = document.createElement("button");
       deleteBtn.type = "button";
+
       deleteBtn.classList.add("delete-pic");
       deleteBtn.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" 
@@ -66,7 +65,9 @@ function updateWorksOnPage(
 
       //dletebtn does this
       deleteBtn.addEventListener("click", (e) => {
+        e.preventDefault();
         e.stopImmediatePropagation();
+
         deleteWork(figure); // still delete the work
       });
 
@@ -74,7 +75,7 @@ function updateWorksOnPage(
     }
     parentElem.appendChild(figure);
   }
-
+}
 
 function deleteWork(figure) {
   const id = figure.dataset.id;
@@ -173,7 +174,6 @@ const loginLink = document.getElementById("loginLink");
 //reversed buttons colors//
 const pjButtons = document.querySelectorAll(".pjButton");
 
-
 pjButtons.forEach(function (button) {
   button.addEventListener("click", function () {
     // Remove "clicked" class from all buttons
@@ -185,12 +185,12 @@ pjButtons.forEach(function (button) {
     const images = document.querySelectorAll(".gallery img");
 
     // Filter images
-    images.forEach(img => {
+    images.forEach((img) => {
       const figure = img.parentElement; // Get the parent figure element
-      if (category === 'all' || img.dataset.category === category) {
-        figure.style.display = 'block';  // show matching
+      if (category === "all" || img.dataset.category === category) {
+        figure.style.display = "block"; // show matching
       } else {
-        figure.style.display = 'none';   // hide others
+        figure.style.display = "none"; // hide others
       }
     });
 
@@ -198,7 +198,6 @@ pjButtons.forEach(function (button) {
     button.classList.add("clicked");
   });
 });
-
 
 // opening modal for edit //
 async function openEditingModal() {
