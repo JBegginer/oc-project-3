@@ -246,8 +246,48 @@ function addPictureModal() {
 document.getElementById("uploadBox").addEventListener("click", () => {
   document.getElementById("image").click();
 });
+//submits form to api
+//submits form to api
+document.getElementById("confirmButton").addEventListener("click", (e) => {
+  e.preventDefault(); // stop form refresh
 
-// add form submit button to send data to api
+  const uploadForm = document.getElementById("uploadForm");
+  const formData = new FormData(uploadForm);
+
+  const token = localStorage.getItem("token"); // if your API requires auth
+
+  fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: formData,
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("✅ Image uploaded successfully");
+        return response.json();
+      } else {
+        console.error("❌ Upload failed");
+        return response.text().then((text) => console.error(text));
+      }
+    })
+    .then((data) => {
+      if (data) {
+        console.log("API Response:", data);
+
+        // refresh gallery immediately with new work
+        const galleryElem = document.querySelector("#portfolio .gallery");
+        fetchWorks().then((works) => updateWorksOnPage(works, galleryElem, true, false));
+
+        // reset form & preview
+        uploadForm.reset();
+        resetImgPreview();
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+});
+
 
 function goBack() {
   const addPicForm = document.getElementById("addPicForm");
