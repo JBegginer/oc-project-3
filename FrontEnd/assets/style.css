@@ -289,8 +289,14 @@ footer nav ul {
 	cursor: pointer;
 	margin-left: auto;
 	padding-right: 2rem;
-	
+  }
 
+  .backButt{
+	background: none;
+	border: none;
+	font-size: 2rem;
+	font-weight: 900;
+	cursor: pointer;
   }
 
   .modalPictureForm {
@@ -300,6 +306,20 @@ footer nav ul {
 	margin-top: 10px;
 	width: 100%;
 	background-color: #f8f8f8;
+  }
+
+  .confirmButton{
+	background-color: #1D6154;
+	border: none;
+	font-size: 1.2rem;
+	cursor: pointer;
+	border-radius: 15px;
+	color: white;
+	width: 50%;
+	height: 36px;
+  }
+  .confirmButton:hover {
+	background-color: #0E2F28;
   }
 
   .inputModal {

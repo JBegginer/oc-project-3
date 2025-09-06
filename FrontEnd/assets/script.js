@@ -19,60 +19,44 @@ function updateWorksOnPage(
 
     const figure = document.createElement("figure");
     figure.classList.add("work-item");
+    figure.dataset.id = currentWork.id; // store work ID here
 
     const img = document.createElement("img");
     img.src = currentWork.imageUrl;
     img.alt = currentWork.title || "No title";
-
-    // Use categoryId as dataset
-    img.dataset.category = currentWork.categoryId;
-
+    img.dataset.category = currentWork.categoryId; // category filter support
     figure.appendChild(img);
 
     // Optional caption
-    if (currentWork.title) {
-      const caption = document.createElement("figcaption");
-      caption.innerText = currentWork.title;
-      figure.appendChild(caption);
-    }
-
-    figure.dataset.id = currentWork.id;
-
-    document.querySelector(".gallery").appendChild(figure);
-
     if (showCaptions && currentWork.title) {
       const caption = document.createElement("figcaption");
       caption.innerText = currentWork.title;
       figure.appendChild(caption);
     }
 
-    // Store the work ID
-    figure.dataset.id = currentWork.id;
-
+    // Optional delete button (SAFE outside of forms)
     if (showDelete) {
       const deleteBtn = document.createElement("button");
-      deleteBtn.type = "button";
-
+      deleteBtn.setAttribute("type", "button"); // extra safe
       deleteBtn.classList.add("delete-pic");
       deleteBtn.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" 
-                    viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
-                    <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520
-                        q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Z
-                        m160 0h80v-360h-80v360ZM280-720v520-520Z"/>
-                </svg>
-            `;
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" 
+            viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+            <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520
+                q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Z
+                m160 0h80v-360h-80v360ZM280-720v520-520Z"/>
+        </svg>
+      `;
 
-      //dletebtn does this
       deleteBtn.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopImmediatePropagation();
-
-        deleteWork(figure); // still delete the work
+        deleteWork(figure);
       });
 
       figure.appendChild(deleteBtn);
     }
+
     parentElem.appendChild(figure);
   }
 }
@@ -99,6 +83,7 @@ function deleteWork(figure) {
       alert("Failed to delete image. Are you logged in or authorized?");
     });
 }
+
 
 async function main() {
   // fetch works from api
@@ -263,10 +248,10 @@ document.getElementById("confirmButton").addEventListener("click", (e) => {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("✅ Image uploaded successfully");
+        console.log("Image uploaded successfully");
         return response.json();
       } else {
-        console.error("❌ Upload failed");
+        console.error("Upload failed");
         return response.text().then((text) => console.error(text));
       }
     })
