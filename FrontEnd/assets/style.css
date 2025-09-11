@@ -356,15 +356,16 @@ footer nav ul {
 	align-items: center;
 	flex-wrap: wrap;
 	gap: 10px;
-	
-	
+		
  }
-
  .logOut{
 	   text-decoration: none;
         color: rgb(0, 0, 0);
-        font-size: 15px;
+        font-size: 16px;
     }
+	  .logOut:hover{
+		color:#B1663C
+	}
  
 
 #modalPictures img {
@@ -387,8 +388,9 @@ footer nav ul {
 	box-sizing: border-box;
 }
  
-  
- #addPicForm{
+
+
+#addPicForm{
 	display: none;
  }
   
@@ -442,10 +444,15 @@ input[type="file"] {
   object-fit: cover;
   border-radius: 8px;
 }
-  
+.work-item {
+	position: relative; /* for positioning delete button */
+}
 
-.deletepic {
+.deletePic {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 1px;
+  right: 1px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }

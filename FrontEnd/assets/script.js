@@ -38,7 +38,7 @@ function updateWorksOnPage(
     if (showDelete) {
       const deleteBtn = document.createElement("button");
       deleteBtn.setAttribute("type", "button"); // extra safe
-      deleteBtn.classList.add("delete-pic");
+      deleteBtn.classList.add("deletePic");
       deleteBtn.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" 
             viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
@@ -124,12 +124,13 @@ function doLogin() {
       }
       const pjButtons = document.querySelector(".pjButtons");
       if (pjButtons) {
-        pjButtons.style.display = "block";
+        pjButtons.style.display = "flex";
       }
 
       const loginAgain = document.createElement("a");
       loginAgain.innerText = "Login";
       loginAgain.href = "login/login.html";
+      loginAgain.classList.add("logOut");
       loginLink.replaceChildren(loginAgain);
     });
 
