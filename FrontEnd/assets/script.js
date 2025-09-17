@@ -49,9 +49,10 @@ function updateWorksOnPage(
       `;
 
       deleteBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        deleteWork(figure);
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  e.stopPropagation();
+  deleteWork(figure);
       });
 
       figure.appendChild(deleteBtn);
@@ -61,28 +62,35 @@ function updateWorksOnPage(
   }
 }
 
-function deleteWork(figure) {
+async function deleteWork(figure) {
   const id = figure.dataset.id;
   const token = localStorage.getItem("token");
 
-  fetch(`http://localhost:5678/api/works/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error("Failed to delete from API");
-      return res.text();
-    })
-    .then(() => {
-      figure.remove(); // Instantly remove from DOM
-    })
-    .catch((err) => {
-      console.error("Error deleting:", err);
-      alert("Failed to delete image. Are you logged in or authorized?");
+  try {
+    const res = await fetch(`http://localhost:5678/api/works/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    if (!res.ok) throw new Error("Failed to delete from API");
+
+    // Fetch updated works and update gallery
+    const works = await fetchWorks();
+    const galleryElem = document.querySelector("#portfolio .gallery");
+    updateWorksOnPage(works, galleryElem, true, false);
+    // Also refresh modal images if modal is open
+    if (document.getElementById("editingModal")?.style.display === "flex") {
+      await loadModalImages();
+    }
+
+  } catch (err) {
+    console.error("Error deleting:", err);
+    alert("Failed to delete image. Are you logged in or authorized?");
+  }
 }
+
 
 
 async function main() {
@@ -186,15 +194,20 @@ pjButtons.forEach(function (button) {
 });
 
 // opening modal for edit //
+
+async function loadModalImages() {
+  const works = await fetchWorks();
+  const modalPictures = document.getElementById("modalPictures");
+  // Clear previous images
+  modalPictures.innerHTML = "";
+  // Render images for modal
+  updateWorksOnPage(works, modalPictures, false, true);
+}
+
 async function openEditingModal() {
   const editingModal = document.getElementById("editingModal");
   editingModal.style.display = "flex";
-
-  const works = await fetchWorks();
-
-  const modalPictures = document.getElementById("modalPictures");
-
-  updateWorksOnPage(works, modalPictures, false, true);
+  await loadModalImages();
 }
 
 const uploadBox = document.getElementById("uploadBox");
