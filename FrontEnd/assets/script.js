@@ -245,23 +245,22 @@ function addPictureModal() {
 document.getElementById("uploadBox").addEventListener("click", () => {
   document.getElementById("image").click();
 });
+
 //submits form to api
 document.getElementById("confirmButton").addEventListener("click", (e) => {
   e.preventDefault(); // stop form refresh
-
   const uploadForm = document.getElementById("uploadForm");
-  const title = document.getElementById("title").value.trim();
-  const category = document.getElementById("category").value;
-  const imageInput = document.getElementById("image");
-  const imageFile = imageInput.files[0];
-
-  if (!title || !category || !imageFile) {
-    alert("Please fill in all fields: title, category, and image.");
-    return;
-  }
-
   const formData = new FormData(uploadForm);
   const token = localStorage.getItem("token"); // if your API requires auth
+  // Basic validation
+  const fileInput = document.getElementById("image");
+  const titleInput = document.getElementById("title");
+  const categoryInput = document.getElementById("category");
+
+  if (!fileInput.files.length || !titleInput.value || !categoryInput.value) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
   fetch("http://localhost:5678/api/works", {
     method: "POST",
