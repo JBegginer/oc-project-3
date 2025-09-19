@@ -253,14 +253,25 @@ document.getElementById("confirmButton").addEventListener("click", (e) => {
   const formData = new FormData(uploadForm);
   const token = localStorage.getItem("token"); // if your API requires auth
   // Basic validation
-  const fileInput = document.getElementById("image");
-  const titleInput = document.getElementById("title");
-  const categoryInput = document.getElementById("category");
+ const fileInput = document.getElementById("image");
+const titleInput = document.getElementById("title");
+const categoryInput = document.getElementById("category");
 
-  if (!fileInput.files.length || !titleInput.value || !categoryInput.value) {
-    alert("Please fill in all fields.");
-    return;
-  }
+if (!fileInput.files.length) {
+  alert("Please upload an image.");
+  return;
+}
+
+if (!titleInput.value.trim()) {
+  alert("Please enter a title.");
+  return;
+}
+
+if (!categoryInput.value) {
+  alert("Please select a category.");
+  return;
+}
+
 
   fetch("http://localhost:5678/api/works", {
     method: "POST",
