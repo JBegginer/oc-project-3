@@ -253,23 +253,21 @@ document.getElementById("confirmButton").addEventListener("click", (e) => {
   const formData = new FormData(uploadForm);
   const token = localStorage.getItem("token"); // if your API requires auth
   // Basic validation
- const fileInput = document.getElementById("image");
+const fileInput = document.getElementById("image");
 const titleInput = document.getElementById("title");
 const categoryInput = document.getElementById("category");
 
-if (!fileInput.files.length) {
-  alert("Please upload an image.");
-  return;
-}
+const validations = [
+  { condition: () => !fileInput.files.length, message: "Please upload an image." },
+  { condition: () => !titleInput.value.trim(), message: "Please enter a title." },
+  { condition: () => !categoryInput.value, message: "Please select a category." }
+];
 
-if (!titleInput.value.trim()) {
-  alert("Please enter a title.");
-  return;
-}
-
-if (!categoryInput.value) {
-  alert("Please select a category.");
-  return;
+for (const check of validations) {
+  if (check.condition()) {
+    alert(check.message);
+    return; // stop at the first failed check
+  }
 }
 
 
