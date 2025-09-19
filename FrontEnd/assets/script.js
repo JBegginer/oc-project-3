@@ -246,13 +246,21 @@ document.getElementById("uploadBox").addEventListener("click", () => {
   document.getElementById("image").click();
 });
 //submits form to api
-//submits form to api
 document.getElementById("confirmButton").addEventListener("click", (e) => {
   e.preventDefault(); // stop form refresh
 
   const uploadForm = document.getElementById("uploadForm");
-  const formData = new FormData(uploadForm);
+  const title = document.getElementById("title").value.trim();
+  const category = document.getElementById("category").value;
+  const imageInput = document.getElementById("image");
+  const imageFile = imageInput.files[0];
 
+  if (!title || !category || !imageFile) {
+    alert("Please fill in all fields: title, category, and image.");
+    return;
+  }
+
+  const formData = new FormData(uploadForm);
   const token = localStorage.getItem("token"); // if your API requires auth
 
   fetch("http://localhost:5678/api/works", {
@@ -280,6 +288,8 @@ document.getElementById("confirmButton").addEventListener("click", (e) => {
         // reset form & preview
         uploadForm.reset();
         resetImgPreview();
+        loadModalImages(); // refresh modal images
+        goBack();
       }
     })
     .catch((error) => {
